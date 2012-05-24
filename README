@@ -1,0 +1,7 @@
+This is one of my old favorite games from the Windows 95 days.  It is a simple puzzle game of which you start with a grid that contains tiles with random numbers between 1 and 8.  You start at a random tile and you can move to any surrounding tile.  The number on the surrounding tile will indicate how many tiles to move away from the previous position and pick up.  For each tile you pick up, you get one point.  The goal is to score the greatest amount of points before you have no available moves left.
+
+I'm developing this as a small side project in hopes to learn some technologies I don't commonly use at my job.  I hope to include the following:
+
+NoSql for persistence
+Html5 and Mvc for one of the ui's
+Mobile themes
