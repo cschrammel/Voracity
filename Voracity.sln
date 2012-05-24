@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vorocity", "Verocity\Vorocity.csproj", "{2EAB685D-3CCF-436E-B342-348E2C67C4A5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Voracity", "Verocity\Voracity.csproj", "{2EAB685D-3CCF-436E-B342-348E2C67C4A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vorocity.Tests", "Verocity.Tests\Vorocity.Tests.csproj", "{B01E5467-F6F4-4245-B956-C6B09160A637}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Voracity.Tests", "Verocity.Tests\Voracity.Tests.csproj", "{B01E5467-F6F4-4245-B956-C6B09160A637}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{434EB185-C9A6-4DA7-845C-671E12D82E82}"
 	ProjectSection(SolutionItems) = preProject
