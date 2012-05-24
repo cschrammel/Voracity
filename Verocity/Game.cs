@@ -4,15 +4,15 @@ namespace Voracity
 {
     public class Game
     {
-        private readonly Board _board;
+        private readonly IBoard _board;
         private int _score;
 
-        public Game(int boardSize)
+        public Game(IBoard board)
         {
-            _board = new Board(boardSize);
+            _board = board;
         }
 
-        public Board Board
+        public IBoard Board
         {
             get { return _board; }
         }

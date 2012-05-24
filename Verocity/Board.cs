@@ -3,19 +3,19 @@ using System.Collections.Generic;
 
 namespace Voracity
 {
-    public class Board
+    public class Board : IBoard
     {
         private readonly int _boardSize;
-
+        private readonly PositionFinder _positionFinder;
         private readonly int _maxTiles;
         private readonly List<PositionedTile> _tiles;
         private PositionedTile _currentTile;
 
-        public Board(int boardSize)
+        public Board(int boardSize, PositionFinder positionFinder)
         {
             _boardSize = boardSize;
+            _positionFinder = positionFinder;
             _maxTiles = _boardSize*_boardSize;
-
             _tiles = new List<PositionedTile>();
             Reset();
         }
@@ -31,14 +31,9 @@ namespace Voracity
             _tiles.Clear();
             for (int i = 1; i <= _maxTiles; i++)
             {
-                _tiles.Add(new PositionedTile(GetPosition(i), random.Next(1, 8)));
+                _tiles.Add(new PositionedTile(_positionFinder.GetPosition(i, _boardSize), random.Next(1, 8)));
             }
             _currentTile = _tiles[random.Next(0, _maxTiles)];
-        }
-
-        private Position GetPosition(int i)
-        {
-            return new Position(((i-1)%_boardSize), (i-1) / _boardSize);
         }
 
         public List<PositionedTile> Tiles()

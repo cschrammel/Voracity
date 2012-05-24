@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace Voracity.Tests
 {
@@ -10,7 +9,26 @@ namespace Voracity.Tests
     public class TestGame
     {
         private const int _boardSize = 5;
-        private readonly Game _game = new Game(_boardSize);
+        private Game _game;
+
+        [TestInitialize]
+        public void TestInit()
+        {
+            List<PositionedTile> tiles;
+            Mock<IBoard> board = CreateMockBoard(out tiles);
+            _game = new Game(board.Object);
+        }
+
+        private static Mock<IBoard> CreateMockBoard(out List<PositionedTile> tiles)
+        {
+            var board = new Mock<IBoard>();
+            tiles = new List<PositionedTile>();
+            for (int i = 0; i < _boardSize*_boardSize; i++)
+                tiles.Add(new PositionedTile(new Position(0, 0), 1));
+            board.Setup(b => b.Tiles()).Returns(tiles);
+            board.Setup(b => b.CurrentTile).Returns(tiles[0]);
+            return board;
+        }
 
         [TestMethod]
         public void NewGame()
@@ -20,74 +38,11 @@ namespace Voracity.Tests
             Assert.AreEqual(_boardSize*_boardSize, _game.TilesRemaining());
         }
 
+
         [TestMethod]
-        public void RandomNumbersMatrix()
+        public void CanMoveUpFrom0_0()
         {
             _game.NewGame();
-            var tiles1 = _game.Board.Tiles();
-            string numberList1 = GetTileNumberString(tiles1);
-            Thread.Sleep(10);
-            _game.NewGame();
-            var tiles2 = _game.Board.Tiles();
-            string numberList2 = GetTileNumberString(tiles2);
-            
-            Assert.AreEqual(tiles1.Count, tiles2.Count);
-            Assert.AreNotEqual(numberList1, numberList2);
-        }
-
-        [TestMethod]
-        public void RandomStartPosition()
-        {
-            _game.NewGame();
-            Position startPosition1 = _game.CurrentTile.Position;
-            Thread.Sleep(10);
-            _game.NewGame();
-            Position startPosition2 = _game.CurrentTile.Position;
-            Assert.AreNotEqual(startPosition1, startPosition2);
-        }
-
-        [TestMethod]
-        public void PositionOfTile1()
-        {
-            AssertTilePosition(1, 0, 0);
-        }
-
-        [TestMethod]
-        public void PositionOfTile6()
-        {
-            AssertTilePosition(6, 0, 1);
-        }
-
-        [TestMethod]
-        public void PositionOfTile9()
-        {
-            AssertTilePosition(9, 3, 1);
-        }
-
-        [TestMethod]
-        public void PositionOfTile25()
-        {
-            AssertTilePosition(25, 4, 4);
-        }
-
-        [TestMethod]
-        public void PositionOfTile24()
-        {
-            AssertTilePosition(24,3,4);
-        }
-
-        private void AssertTilePosition(int position, int expectedX, int expectedY)
-        {
-            _game.NewGame();
-            var positionOfTile = _game.Board.Tiles()[position - 1].Position;
-            Assert.AreEqual(expectedX, positionOfTile.X);
-            Assert.AreEqual(expectedY, positionOfTile.Y);
-        }
-
-
-        private static string GetTileNumberString(IEnumerable<Tile> tiles)
-        {
-            return tiles.Aggregate("", (current,t) => current + t.Number.ToString(CultureInfo.InvariantCulture));
         }
     }
 }
