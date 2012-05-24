@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Verocity.Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class TestGame
     {
         [TestMethod]
         public void TestMethod1()

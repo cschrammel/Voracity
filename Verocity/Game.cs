@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Verocity
 {
-    public class Class1
+    public class Game
     {
     }
 }

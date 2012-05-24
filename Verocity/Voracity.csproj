@@ -8,8 +8,8 @@
     <ProjectGuid>{2EAB685D-3CCF-436E-B342-348E2C67C4A5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Verocity</RootNamespace>
-    <AssemblyName>Verocity</AssemblyName>
+    <RootNamespace>Voracity</RootNamespace>
+    <AssemblyName>Voracity</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
