@@ -1,45 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Linq;
 
 namespace Voracity
 {
     public class Game
     {
-        private readonly int _boardSize;
+        private readonly Board _board;
         private int _score;
-        private List<Tile> _tiles;
 
         public Game(int boardSize)
         {
-            _boardSize = boardSize;
-            _tiles = new List<Tile>();
-            
+            _board = new Board(boardSize);
+        }
+
+        public Board Board
+        {
+            get { return _board; }
+        }
+
+        public PositionedTile CurrentTile
+        {
+            get { return _board.CurrentTile; }
+        }
+
+        public int TilesRemaining()
+        {
+            return (from t in _board.Tiles() where t.IsActive select t).Count();
         }
 
         public void NewGame()
         {
             _score = 0;
-            var random = new System.Random();
-            _tiles = new List<Tile>();
-            for (int i = 0; i <= _boardSize*2; i++)
-            {
-                _tiles.Add(new Tile(random.Next(1,8)));
-            }
-    }
+            _board.Reset();
+        }
 
         public int Score()
         {
             return _score;
-        }
-
-        public int TilesLeft()
-        {
-            return _boardSize*_boardSize;
-        }
-
-        public List<Tile> Tiles()
-        {
-            return _tiles;
         }
     }
 }
