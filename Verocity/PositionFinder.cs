@@ -1,15 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Voracity
+﻿namespace Voracity
 {
     public class PositionFinder
     {
-        public Position GetPosition(int positionIndex, int boardSize)
+        private readonly int _boardSize;
+
+        public PositionFinder(int boardSize)
         {
-            return new Position(((positionIndex - 1) % boardSize), (positionIndex - 1) / boardSize);
+            _boardSize = boardSize;
+        }
+
+        public Position GetPosition(int positionIndex)
+        {
+            return new Position(((positionIndex - 1) % _boardSize), (positionIndex - 1) / _boardSize);
+        }
+
+        public int GetIndex(Position position)
+        {
+            return (position.Y + 1) * _boardSize + position.X;
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Voracity
         public void NewGame()
         {
             _score = 0;
-            _board.Reset();
+            _board.ResetTiles();
         }
 
         public int Score()

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
@@ -24,7 +23,7 @@ namespace Voracity.Tests
             var board = new Mock<IBoard>();
             tiles = new List<PositionedTile>();
             for (int i = 0; i < _boardSize*_boardSize; i++)
-                tiles.Add(new PositionedTile(new Position(0, 0), 1));
+                tiles.Add(new PositionedTile(new PositionFinder(_boardSize).GetPosition(i), 1));
             board.Setup(b => b.Tiles()).Returns(tiles);
             board.Setup(b => b.CurrentTile).Returns(tiles[0]);
             return board;
@@ -38,11 +37,5 @@ namespace Voracity.Tests
             Assert.AreEqual(_boardSize*_boardSize, _game.TilesRemaining());
         }
 
-
-        [TestMethod]
-        public void CanMoveUpFrom0_0()
-        {
-            _game.NewGame();
-        }
     }
 }

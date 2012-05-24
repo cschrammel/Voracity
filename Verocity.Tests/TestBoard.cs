@@ -15,7 +15,7 @@ namespace Voracity.Tests
         [TestInitialize]
         public void TestInit()
         {
-            _board = new Board(_boardSize, new PositionFinder());
+            _board = new Board(_boardSize, new PositionFinder(_boardSize));
         }
 
         [TestMethod]
@@ -29,8 +29,8 @@ namespace Voracity.Tests
         {
             List<PositionedTile> tiles1 = _board.Tiles();
             string numberList1 = GetTileNumberString(tiles1);
-            Thread.Sleep(10);
-            _board.Reset();
+            Thread.Sleep(20);
+            _board.ResetTiles();
             List<PositionedTile> tiles2 = _board.Tiles();
             string numberList2 = GetTileNumberString(tiles2);
 
@@ -44,52 +44,16 @@ namespace Voracity.Tests
         }
 
         [TestMethod]
-        public void PositionOfTile1()
-        {
-            AssertTilePosition(1, 0, 0);
-        }
-
-        [TestMethod]
-        public void PositionOfTile6()
-        {
-            AssertTilePosition(6, 0, 1);
-        }
-
-        [TestMethod]
-        public void PositionOfTile9()
-        {
-            AssertTilePosition(9, 3, 1);
-        }
-
-        [TestMethod]
-        public void PositionOfTile25()
-        {
-            AssertTilePosition(25, 4, 4);
-        }
-
-        [TestMethod]
-        public void PositionOfTile24()
-        {
-            AssertTilePosition(24, 3, 4);
-        }
-
-        private void AssertTilePosition(int position, int expectedX, int expectedY)
-        {
-            Position positionOfTile = _board.Tiles()[position - 1].Position;
-            Assert.AreEqual(expectedX, positionOfTile.X);
-            Assert.AreEqual(expectedY, positionOfTile.Y);
-        }
-
-
-        [TestMethod]
         public void RandomStartPosition()
         {
-            _board.Reset();
+            _board.ResetTiles();
             Position startPosition1 = _board.CurrentTile.Position;
             Thread.Sleep(20);
-            _board.Reset();
+            _board.ResetTiles();
             Position startPosition2 = _board.CurrentTile.Position;
             Assert.AreNotEqual(startPosition1, startPosition2);
         }
+
+        
     }
 }

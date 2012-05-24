@@ -5,7 +5,7 @@ namespace Voracity
     public interface IBoard
     {
         PositionedTile CurrentTile { get; }
-        void Reset();
+        void ResetTiles();
         List<PositionedTile> Tiles();
     }
 }

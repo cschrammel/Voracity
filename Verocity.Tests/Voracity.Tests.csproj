@@ -51,6 +51,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestBoard.cs" />
     <Compile Include="TestGame.cs" />
+    <Compile Include="TestPositionFinder.cs" />
+    <Compile Include="TestSurroundingTileFinder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="specs\" />

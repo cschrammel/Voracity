@@ -6,8 +6,8 @@ namespace Voracity
     public class Board : IBoard
     {
         private readonly int _boardSize;
-        private readonly PositionFinder _positionFinder;
         private readonly int _maxTiles;
+        private readonly PositionFinder _positionFinder;
         private readonly List<PositionedTile> _tiles;
         private PositionedTile _currentTile;
 
@@ -17,21 +17,23 @@ namespace Voracity
             _positionFinder = positionFinder;
             _maxTiles = _boardSize*_boardSize;
             _tiles = new List<PositionedTile>();
-            Reset();
+            ResetTiles();
         }
+
+        #region IBoard Members
 
         public PositionedTile CurrentTile
         {
             get { return _currentTile; }
         }
 
-        public void Reset()
+        public void ResetTiles()
         {
             var random = new Random();
             _tiles.Clear();
             for (int i = 1; i <= _maxTiles; i++)
             {
-                _tiles.Add(new PositionedTile(_positionFinder.GetPosition(i, _boardSize), random.Next(1, 8)));
+                _tiles.Add(new PositionedTile(_positionFinder.GetPosition(i), random.Next(1, 8)));
             }
             _currentTile = _tiles[random.Next(0, _maxTiles)];
         }
@@ -40,5 +42,8 @@ namespace Voracity
         {
             return _tiles;
         }
+
+        #endregion
+
     }
 }
