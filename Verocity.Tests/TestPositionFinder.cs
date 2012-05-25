@@ -48,6 +48,24 @@ namespace Voracity.Tests
             AssertTilePosition(24, 3, 4);
         }
 
+        [TestMethod]
+        public void IndexOfTile1()
+        {
+            Assert.AreEqual(0, _positionFinder.GetIndex(new Position(0,0)));
+        }
+
+        [TestMethod]
+        public void IndexOfTile24()
+        {
+            Assert.AreEqual(23, _positionFinder.GetIndex(new Position(3, 4)));
+        }
+
+        [TestMethod]
+        public void IndexOfTile25()
+        {
+            Assert.AreEqual(24, _positionFinder.GetIndex(new Position(4, 4)));
+        }
+
         private void AssertTilePosition(int position, int expectedX, int expectedY)
         {
             Position positionOfTile = _positionFinder.GetPosition(position);

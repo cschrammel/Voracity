@@ -16,7 +16,7 @@
 
         public int GetIndex(Position position)
         {
-            return (position.Y + 1) * _boardSize + position.X;
+            return (position.Y) * _boardSize + position.X;
         }
     }
 }
