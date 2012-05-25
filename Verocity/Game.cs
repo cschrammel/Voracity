@@ -17,11 +17,6 @@ namespace Voracity
             get { return _board; }
         }
 
-        public PositionedTile CurrentTile
-        {
-            get { return _board.CurrentTile; }
-        }
-
         public int TilesRemaining()
         {
             return (from t in _board.Tiles() where t.IsActive select t).Count();

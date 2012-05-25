@@ -35,6 +35,7 @@ namespace Voracity.Tests
             _game.NewGame();
             Assert.AreEqual(0, _game.Score());
             Assert.AreEqual(_boardSize*_boardSize, _game.TilesRemaining());
+            Assert.IsNotNull(_game.Board);
         }
 
     }

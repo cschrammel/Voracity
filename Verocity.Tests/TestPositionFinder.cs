@@ -1,16 +1,12 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Voracity.Tests
 {
     [TestClass]
     public class TestPositionFinder
     {
-        private PositionFinder _positionFinder;
         private const int _boardSize = 5;
+        private PositionFinder _positionFinder;
 
         [TestInitialize]
         public void TestInit()
@@ -51,7 +47,7 @@ namespace Voracity.Tests
         [TestMethod]
         public void IndexOfTile1()
         {
-            Assert.AreEqual(0, _positionFinder.GetIndex(new Position(0,0)));
+            Assert.AreEqual(0, _positionFinder.GetIndex(new Position(0, 0)));
         }
 
         [TestMethod]
@@ -72,6 +68,5 @@ namespace Voracity.Tests
             Assert.AreEqual(expectedX, positionOfTile.X);
             Assert.AreEqual(expectedY, positionOfTile.Y);
         }
-
     }
 }

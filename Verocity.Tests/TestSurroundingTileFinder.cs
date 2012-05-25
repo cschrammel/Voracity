@@ -29,7 +29,7 @@ namespace Voracity.Tests
         public void GetSurroundingTilesFromEdgeTile()
         {
             var start = new Position(0, 2);
-            AssertTileCount(start, _boardSize);
+            AssertTileCount(start, 5);
         }
 
         [TestMethod]
