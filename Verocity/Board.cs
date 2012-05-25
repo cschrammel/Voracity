@@ -25,6 +25,7 @@ namespace Voracity
         public PositionedTile CurrentTile
         {
             get { return _currentTile; }
+            set { _currentTile = value; }
         }
 
         public void ResetTiles()

@@ -24,19 +24,19 @@ namespace Voracity
                     select GetTile(p, tiles)).ToList();
         }
 
-        private bool IsValid(Position position)
+        public bool IsValid(Position position)
         {
             if (position.X < 0 || position.Y < 0) return false;
             if (position.X > _boardSize - 1 || position.Y > _boardSize - 1) return false;
             return true;
         }
 
-        private PositionedTile GetTile(Position position, List<PositionedTile> tiles)
+        public PositionedTile GetTile(Position position, List<PositionedTile> tiles)
         {
             return tiles[_positionFinder.GetIndex(position)];
         }
 
-        private Position GetSurroundingPosition(Position start, Directions direction)
+        public Position GetSurroundingPosition(Position start, Directions direction)
         {
             Position position;
             switch (direction)

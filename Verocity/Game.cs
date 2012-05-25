@@ -5,11 +5,13 @@ namespace Voracity
     public class Game
     {
         private readonly IBoard _board;
+        private readonly SurroundingTileFinder _tileFinder;
         private int _score;
 
-        public Game(IBoard board)
+        public Game(IBoard board, SurroundingTileFinder tileFinder)
         {
             _board = board;
+            _tileFinder = tileFinder;
         }
 
         public IBoard Board
@@ -32,5 +34,47 @@ namespace Voracity
         {
             return _score;
         }
+
+        public void Chomp(Directions direction)
+        {
+            if (CanMove(direction))
+            {
+                Position surroundingPosition = _tileFinder.GetSurroundingPosition(_board.CurrentTile.Position, direction);
+                var nextTile = _tileFinder.GetTile(surroundingPosition, _board.Tiles());
+                nextTile.IsActive = false;
+                _board.CurrentTile = nextTile;
+                var nTile = nextTile;                 
+                for (int i = 1; i < nextTile.Number; i++)
+                {
+                    Position nextPosition = _tileFinder.GetSurroundingPosition(nTile.Position, direction);
+                    nTile = _tileFinder.GetTile(nextPosition, _board.Tiles());
+                    nTile.IsActive = false;
+                    _board.CurrentTile = nTile;
+                }
+            }
+        }
+
+        private bool CanMove(Directions direction)
+        {
+            Position surroundingPosition = _tileFinder.GetSurroundingPosition(_board.CurrentTile.Position, direction);
+            if (_tileFinder.IsValid(surroundingPosition))
+            {
+                var nextTile = _tileFinder.GetTile(surroundingPosition, _board.Tiles());
+                var nTile = nextTile;                 
+                for (int i = 1; i < nextTile.Number; i++)
+                {
+                    Position nextPosition = _tileFinder.GetSurroundingPosition(nTile.Position, direction);
+                    if (!_tileFinder.IsValid(nextPosition)) return false;
+                    nTile = _tileFinder.GetTile(nextPosition, _board.Tiles());
+                }
+            }
+            else
+            {
+                return false;
+            }
+            return true;
+        }
+
+
     }
 }

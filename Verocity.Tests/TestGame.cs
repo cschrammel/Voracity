@@ -1,32 +1,19 @@
-﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Voracity.Tests
 {
     [TestClass]
     public class TestGame
     {
-        private const int _boardSize = 5;
+        private const int _boardSize = 25;
         private Game _game;
 
         [TestInitialize]
         public void TestInit()
         {
-            List<PositionedTile> tiles;
-            Mock<IBoard> board = CreateMockBoard(out tiles);
-            _game = new Game(board.Object);
-        }
-
-        private static Mock<IBoard> CreateMockBoard(out List<PositionedTile> tiles)
-        {
-            var board = new Mock<IBoard>();
-            tiles = new List<PositionedTile>();
-            for (int i = 0; i < _boardSize*_boardSize; i++)
-                tiles.Add(new PositionedTile(new PositionFinder(_boardSize).GetPosition(i), 1));
-            board.Setup(b => b.Tiles()).Returns(tiles);
-            board.Setup(b => b.CurrentTile).Returns(tiles[0]);
-            return board;
+            var positionFinder = new PositionFinder(_boardSize);
+            var board = new Board(_boardSize, positionFinder);
+            _game = new Game(board, new SurroundingTileFinder(_boardSize, positionFinder));
         }
 
         [TestMethod]
@@ -38,5 +25,15 @@ namespace Voracity.Tests
             Assert.IsNotNull(_game.Board);
         }
 
+        [TestMethod]
+        public void ChompUp()
+        {
+            PositionedTile firstTile = _game.Board.Tiles()[0];
+            _game.Board.CurrentTile = firstTile;
+            _game.Chomp(Directions.North);
+            PositionedTile northernTile = _game.Board.Tiles()[25];
+            Assert.AreEqual(0, _game.Board.CurrentTile.Position.X);
+            Assert.AreEqual(northernTile.Number, _game.Board.CurrentTile.Position.Y);
+        }
     }
 }
