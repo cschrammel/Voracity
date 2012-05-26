@@ -15,7 +15,8 @@ namespace Voracity.Tests
         [TestInitialize]
         public void TestInit()
         {
-            _board = new Board(_boardSize, new PositionFinder(_boardSize));
+            var positionFinder = new PositionFinder(_boardSize);
+            _board = new Board(_boardSize, positionFinder, new SurroundingTileFinder(_boardSize, positionFinder));
         }
 
         [TestMethod]

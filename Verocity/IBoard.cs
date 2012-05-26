@@ -4,8 +4,9 @@ namespace Voracity
 {
     public interface IBoard
     {
-        PositionedTile CurrentTile { get; set; }
+        PositionedTile CurrentTile { get; }
         void ResetTiles();
         List<PositionedTile> Tiles();
+        void Move(Directions direction);
     }
 }

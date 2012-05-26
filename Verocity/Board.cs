@@ -8,13 +8,15 @@ namespace Voracity
         private readonly int _boardSize;
         private readonly int _maxTiles;
         private readonly PositionFinder _positionFinder;
+        private readonly SurroundingTileFinder _tileFinder;
         private readonly List<PositionedTile> _tiles;
         private PositionedTile _currentTile;
 
-        public Board(int boardSize, PositionFinder positionFinder)
+        public Board(int boardSize, PositionFinder positionFinder, SurroundingTileFinder tileFinder)
         {
             _boardSize = boardSize;
             _positionFinder = positionFinder;
+            _tileFinder = tileFinder;
             _maxTiles = _boardSize*_boardSize;
             _tiles = new List<PositionedTile>();
             ResetTiles();
@@ -25,7 +27,15 @@ namespace Voracity
         public PositionedTile CurrentTile
         {
             get { return _currentTile; }
-            set { _currentTile = value; }
+            protected set { _currentTile = value; }
+        }
+
+        public void Move(Directions direction)
+        {
+            Position surroundingPosition = _tileFinder.GetSurroundingPosition(_currentTile.Position, direction);
+            var nextTile = _tileFinder.GetTile(surroundingPosition, Tiles());
+            nextTile.IsActive = false;
+            _currentTile = nextTile;
         }
 
         public void ResetTiles()

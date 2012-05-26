@@ -39,17 +39,11 @@ namespace Voracity
         {
             if (CanMove(direction))
             {
-                Position surroundingPosition = _tileFinder.GetSurroundingPosition(_board.CurrentTile.Position, direction);
-                var nextTile = _tileFinder.GetTile(surroundingPosition, _board.Tiles());
-                nextTile.IsActive = false;
-                _board.CurrentTile = nextTile;
-                var nTile = nextTile;                 
-                for (int i = 1; i < nextTile.Number; i++)
+                Board.Move(direction);
+                var tileWithNumberToMove = Board.CurrentTile;
+                for (int i = 1; i < tileWithNumberToMove.Number; i++)
                 {
-                    Position nextPosition = _tileFinder.GetSurroundingPosition(nTile.Position, direction);
-                    nTile = _tileFinder.GetTile(nextPosition, _board.Tiles());
-                    nTile.IsActive = false;
-                    _board.CurrentTile = nTile;
+                   _board.Move(direction);
                 }
             }
         }

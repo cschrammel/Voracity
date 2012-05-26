@@ -14,7 +14,7 @@ namespace Voracity.Tests
         {
             var positionFinder = new PositionFinder(_boardSize);
             _surroundingTileFinder = new SurroundingTileFinder(_boardSize, positionFinder);
-            var board = new Board(_boardSize, positionFinder);
+            var board = new Board(_boardSize, positionFinder, _surroundingTileFinder);
             _tiles = board.Tiles();
         }
 
