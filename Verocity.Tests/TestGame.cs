@@ -83,6 +83,16 @@ namespace Voracity.Tests
         }
 
         [TestMethod]
+        public void CantMove()
+        {
+            PositionedTile bottomLeftTile = _board.Tiles()[0];
+            _board.SetCurrentTile(bottomLeftTile);
+            _game.Chomp(Directions.West);
+            Assert.AreEqual(0, _game.Board.CurrentTile.Position.X);
+            Assert.AreEqual(0, _game.Board.CurrentTile.Position.Y);
+        }
+
+        [TestMethod]
         public void ChompNorthEast()
         {
             PositionedTile bottomLetTile = _board.Tiles()[0];
@@ -109,6 +119,26 @@ namespace Voracity.Tests
             expectedScore += surroundingTile.Number;
             _game.Chomp(Directions.East);
             Assert.AreEqual(expectedScore, _game.Score());
+        }
+
+        [TestMethod]
+        public void TilesRemaining()
+        {
+            PositionedTile bottomLeftTile = _board.Tiles()[0];
+            _board.SetCurrentTile(bottomLeftTile);
+            _game.Chomp(Directions.North);
+            PositionedTile northernTile = _game.Board.Tiles()[_boardSize];
+            var expectedTilesRemaining = _game.Board.Tiles().Count - northernTile.Number;
+            Assert.AreEqual(expectedTilesRemaining, _game.TilesRemaining());
+        }
+
+        [TestMethod]
+        public void AvailableMoves()
+        {
+            PositionedTile bottomLeftTile = _board.Tiles()[0];
+            _board.SetCurrentTile(bottomLeftTile);
+            const int expectedMovesRemaining = 3;
+            Assert.AreEqual(expectedMovesRemaining, _game.AvailableMoves());
         }
     }
 

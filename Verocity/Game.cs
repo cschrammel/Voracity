@@ -70,6 +70,9 @@ namespace Voracity
             return true;
         }
 
-
+        public int AvailableMoves()
+        {
+            return _tileFinder.GetSurroundingTiles(_board.CurrentTile.Position, _board.Tiles()).Count;
+        }
     }
 }
