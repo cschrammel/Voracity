@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Voracity
 {
@@ -70,9 +72,11 @@ namespace Voracity
             return true;
         }
 
-        public int AvailableMoves()
+        public List<PositionedTile> AvailableMoves()
         {
-            return _tileFinder.GetSurroundingTiles(_board.CurrentTile.Position, _board.Tiles()).Count;
+            return (from direction in Enum.GetValues(typeof(Directions)).Cast<Directions>()
+             where CanMove(direction)
+                        select _tileFinder.GetTile(_tileFinder.GetSurroundingPosition(_board.CurrentTile.Position, direction), _board.Tiles())).ToList();
         }
     }
 }

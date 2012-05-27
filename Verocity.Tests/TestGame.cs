@@ -138,7 +138,7 @@ namespace Voracity.Tests
             PositionedTile bottomLeftTile = _board.Tiles()[0];
             _board.SetCurrentTile(bottomLeftTile);
             const int expectedMovesRemaining = 3;
-            Assert.AreEqual(expectedMovesRemaining, _game.AvailableMoves());
+            Assert.AreEqual(expectedMovesRemaining, _game.AvailableMoves().Count);
         }
     }
 
