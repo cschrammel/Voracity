@@ -30,19 +30,52 @@ namespace Voracity.Tests
         [TestMethod]
         public void ChompUp()
         {
-            PositionedTile firstTile = _board.Tiles()[0];
-            _board.SetCurrentTile(firstTile);
+            PositionedTile bottomLeftTile = _board.Tiles()[0];
+            _board.SetCurrentTile(bottomLeftTile);
             _game.Chomp(Directions.North);
-            PositionedTile northernTile = _game.Board.Tiles()[25];
+            PositionedTile northernTile = _game.Board.Tiles()[_boardSize];
             Assert.AreEqual(0, _game.Board.CurrentTile.Position.X);
             Assert.AreEqual(northernTile.Number, _game.Board.CurrentTile.Position.Y);
         }
 
         [TestMethod]
+        public void ChompDown()
+        {
+            PositionedTile topRightTile = _board.Tiles()[_board.Tiles().Count - 1];
+            _board.SetCurrentTile(topRightTile);
+            _game.Chomp(Directions.South);
+            PositionedTile southernTile = _game.Board.Tiles()[_board.Tiles().Count - _boardSize -1];
+            Assert.AreEqual(_boardSize - 1, _game.Board.CurrentTile.Position.X);
+            Assert.AreEqual(southernTile.Number, _boardSize - 1 - _game.Board.CurrentTile.Position.Y);
+        }
+
+        [TestMethod]
+        public void ChompSouthWest()
+        {
+            PositionedTile topRightTile = _board.Tiles()[_board.Tiles().Count - 1];
+            _board.SetCurrentTile(topRightTile);
+            _game.Chomp(Directions.SouthWest);
+            PositionedTile southEasternTile = _game.Board.Tiles()[_board.Tiles().Count - _boardSize - 2];
+            Assert.AreEqual(southEasternTile.Number, _boardSize - 1 - _game.Board.CurrentTile.Position.X);
+            Assert.AreEqual(southEasternTile.Number, _boardSize - 1 - _game.Board.CurrentTile.Position.Y);
+        }
+
+        [TestMethod]
+        public void ChompWest()
+        {
+            PositionedTile topRightTile = _board.Tiles()[_board.Tiles().Count - 1];
+            _board.SetCurrentTile(topRightTile);
+            _game.Chomp(Directions.West);
+            PositionedTile westernTile = _game.Board.Tiles()[_board.Tiles().Count - 2];
+            Assert.AreEqual(_boardSize - 1 - westernTile.Number, _game.Board.CurrentTile.Position.X);
+            Assert.AreEqual(_boardSize - 1, _game.Board.CurrentTile.Position.Y);
+        }
+
+        [TestMethod]
         public void ChompEast()
         {
-            PositionedTile firstTile = _board.Tiles()[0];
-            _board.SetCurrentTile(firstTile);
+            PositionedTile bottomLeftTile = _board.Tiles()[0];
+            _board.SetCurrentTile(bottomLeftTile);
             _game.Chomp(Directions.East);
             PositionedTile easternTile = _game.Board.Tiles()[1];
             Assert.AreEqual(easternTile.Number, _game.Board.CurrentTile.Position.X);
@@ -52,12 +85,30 @@ namespace Voracity.Tests
         [TestMethod]
         public void ChompNorthEast()
         {
-            PositionedTile firstTile = _board.Tiles()[0];
-            _board.SetCurrentTile(firstTile);
+            PositionedTile bottomLetTile = _board.Tiles()[0];
+            _board.SetCurrentTile(bottomLetTile);
             _game.Chomp(Directions.NorthEast);
             PositionedTile northeasternTile = _game.Board.Tiles()[_boardSize+1];
             Assert.AreEqual(northeasternTile.Number, _game.Board.CurrentTile.Position.X);
             Assert.AreEqual(northeasternTile.Number, _game.Board.CurrentTile.Position.Y);
+        }
+
+        [TestMethod]
+        public void Score()
+        {
+            var expectedScore = 0;
+            PositionedTile bottomLetTile = _board.Tiles()[0];
+            _board.SetCurrentTile(bottomLetTile);
+            _game.Chomp(Directions.NorthEast);
+            PositionedTile surroundingTile = _game.Board.Tiles()[_boardSize + 1];
+            expectedScore += surroundingTile.Number;
+            Assert.AreEqual(expectedScore , _game.Score());
+            
+            var surroundingTileFinder = new SurroundingTileFinder(_boardSize, _positionFinder);
+            surroundingTile = surroundingTileFinder.GetTile(surroundingTileFinder.GetSurroundingPosition(_game.Board.CurrentTile.Position, Directions.East), _game.Board.Tiles());
+            expectedScore += surroundingTile.Number;
+            _game.Chomp(Directions.East);
+            Assert.AreEqual(expectedScore, _game.Score());
         }
     }
 

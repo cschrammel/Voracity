@@ -45,6 +45,7 @@ namespace Voracity
                 {
                    _board.Move(direction);
                 }
+                _score += tileWithNumberToMove.Number;
             }
         }
 
