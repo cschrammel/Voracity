@@ -6,6 +6,7 @@ namespace Voracity.UI.Console
     {
         private const int _boardSize = 10;
         private static Game _gameEngine;
+        private static KeyboardInputMapper _inputMapper;
 
         private static void Main(string[] args)
         {
@@ -13,19 +14,27 @@ namespace Voracity.UI.Console
             var surroundingTileFinder = new SurroundingTileFinder(_boardSize, positionFinder);
             _gameEngine = new Game(new Board(_boardSize, positionFinder, surroundingTileFinder),
                                    surroundingTileFinder);
+            _inputMapper = new KeyboardInputMapper();
             while (_gameEngine.AvailableMoves().Count > 0)
             {
                 System.Console.Clear();
-                System.Console.WriteLine(
-                    String.Format(
-                        "Keys: Up={0}, Down={1}, Left={2}, Right={3}, \n" +
-                        "Up-Left={4}, Up-Right={5}, Down-Left={6}, Down-Right={7}\n\n",
-                        "W", "X", "A", "D", "Q", "E", "Z", "C"));
+                System.Console.WriteLine(GetControlsInstructions());
                 DrawBoard(_gameEngine.Board);
                 ProcessInput();
             }
             System.Console.WriteLine("\n\nGame Over.  Score: " + _gameEngine.Score() + ".  Press Enter to continue.");
             System.Console.ReadLine();
+        }
+
+        private static string GetControlsInstructions()
+        {
+            return String.Format(
+                "Keys: Up={0}, Down={1}, Left={2}, Right={3}, \n" +
+                "Up-Left={4}, Up-Right={5}, Down-Left={6}, Down-Right={7}\n\n",
+                _inputMapper.GetKey(Directions.South), _inputMapper.GetKey(Directions.North),
+                _inputMapper.GetKey(Directions.West), _inputMapper.GetKey(Directions.East),
+                _inputMapper.GetKey(Directions.SouthWest), _inputMapper.GetKey(Directions.SouthEast),
+                _inputMapper.GetKey(Directions.NorthWest), _inputMapper.GetKey(Directions.NorthEast));
         }
 
         private static void DrawBoard(IBoard board)
@@ -49,7 +58,7 @@ namespace Voracity.UI.Console
                         System.Console.BackgroundColor = ConsoleColor.Blue;
                         System.Console.ForegroundColor = ConsoleColor.White;
                         System.Console.Write(" ");
-                        System.Console.ResetColor();                    
+                        System.Console.ResetColor();
                     }
                 }
                 System.Console.Write("   ");
@@ -61,32 +70,7 @@ namespace Voracity.UI.Console
         private static void ProcessInput()
         {
             ConsoleKeyInfo input = System.Console.ReadKey();
-            _gameEngine.Chomp(InputMapper(input));
-        }
-
-        private static Directions InputMapper(ConsoleKeyInfo input)
-        {
-            switch (input.Key)
-            {
-                case ConsoleKey.W:
-                    return Directions.South;
-                case ConsoleKey.X:
-                    return Directions.North;
-                case ConsoleKey.D:
-                    return Directions.East;
-                case ConsoleKey.A:
-                    return Directions.West;
-                case ConsoleKey.Q:
-                    return Directions.SouthWest;
-                case ConsoleKey.E:
-                    return Directions.SouthEast;
-                case ConsoleKey.Z:
-                    return Directions.NorthWest;
-                case ConsoleKey.C:
-                    return Directions.NorthEast;
-                default:
-                    return Directions.None;
-            }
+            _gameEngine.Chomp(_inputMapper.GetDirection(input.Key));
         }
     }
 }
