@@ -8,5 +8,7 @@ namespace Voracity
         void ResetTiles();
         List<PositionedTile> Tiles();
         void Move(Directions direction);
+        bool CanMove(Directions direction);
+        List<PositionedTile> AvailableMoves();
     }
 }

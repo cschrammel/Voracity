@@ -16,7 +16,7 @@ namespace Voracity.Tests
             _positionFinder = new PositionFinder(_boardSize);
             _board = new BoardTestDouble(_boardSize, _positionFinder,
                                          new SurroundingTileFinder(_boardSize, _positionFinder));
-            _game = new Game(_board, new SurroundingTileFinder(_boardSize, _positionFinder));
+            _game = new Game(_board);
         }
 
         [TestMethod]
@@ -132,26 +132,6 @@ namespace Voracity.Tests
             Assert.AreEqual(expectedTilesRemaining, _game.TilesRemaining());
         }
 
-        [TestMethod]
-        public void AvailableMoves()
-        {
-            PositionedTile bottomLeftTile = _board.Tiles()[0];
-            _board.SetCurrentTile(bottomLeftTile);
-            const int expectedMovesRemaining = 3;
-            Assert.AreEqual(expectedMovesRemaining, _game.AvailableMoves().Count);
-        }
-    }
-
-    public class BoardTestDouble : Board
-    {
-        public BoardTestDouble(int boardSize, PositionFinder positionFinder, SurroundingTileFinder tileFinder)
-            : base(boardSize, positionFinder, tileFinder)
-        {
-        }
-
-        public void SetCurrentTile(PositionedTile tile)
-        {
-            CurrentTile = tile;
-        }
+        
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Voracity
 {
@@ -53,6 +54,47 @@ namespace Voracity
         public List<PositionedTile> Tiles()
         {
             return _tiles;
+        }
+
+        public bool CanMove(Directions direction)
+        {
+        Position surroundingPosition = _tileFinder.GetSurroundingPosition(_currentTile.Position, direction);
+            if (_tileFinder.IsValid(surroundingPosition))
+            {
+                PositionedTile nextTile = _tileFinder.GetTile(surroundingPosition, _tiles);
+                PositionedTile nTile = nextTile;
+                if (nTile.IsActive == false) return false;
+                for (int i = 1; i < nextTile.Number; i++)
+                {
+                    Position nextPosition = _tileFinder.GetSurroundingPosition(nTile.Position, direction);
+                    if (!_tileFinder.IsValid(nextPosition)) return false;
+                    nTile = _tileFinder.GetTile(nextPosition, _tiles);
+                    if (nTile.IsActive == false) return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public List<PositionedTile> AvailableMoves()
+        {
+            return (from direction in GetAllDirections()
+                    where CanMove(direction)
+                    select GetSurroundingTile(direction)).ToList();
+        }
+
+        private PositionedTile GetSurroundingTile(Directions direction)
+        {
+            return _tileFinder.GetTile(
+                _tileFinder.GetSurroundingPosition(_currentTile.Position, direction), _tiles);
+        }
+
+        private IEnumerable<Directions> GetAllDirections()
+        {
+            return Enum.GetValues(typeof(Directions)).Cast<Directions>();
         }
 
         #endregion

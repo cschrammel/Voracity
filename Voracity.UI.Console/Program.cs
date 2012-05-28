@@ -4,7 +4,7 @@ namespace Voracity.UI.Console
 {
     public class Program
     {
-        private const int _boardSize = 10;
+        private const int _boardSize = 17;
         private static Game _gameEngine;
         private static KeyboardInputMapper _inputMapper;
 
@@ -12,16 +12,14 @@ namespace Voracity.UI.Console
         {
             var positionFinder = new PositionFinder(_boardSize);
             var surroundingTileFinder = new SurroundingTileFinder(_boardSize, positionFinder);
-            _gameEngine = new Game(new Board(_boardSize, positionFinder, surroundingTileFinder),
-                                   surroundingTileFinder);
+            _gameEngine = new Game(new Board(_boardSize, positionFinder, surroundingTileFinder));
             _inputMapper = new KeyboardInputMapper();
-            while (_gameEngine.AvailableMoves().Count > 0)
+            while (_gameEngine.Board.AvailableMoves().Count > 0)
             {
-                System.Console.Clear();
-                System.Console.WriteLine(GetControlsInstructions());
                 DrawBoard(_gameEngine.Board);
                 ProcessInput();
             }
+            DrawBoard(_gameEngine.Board);
             System.Console.WriteLine("\n\nGame Over.  Score: " + _gameEngine.Score() + ".  Press Enter to continue.");
             System.Console.ReadLine();
         }
@@ -39,32 +37,32 @@ namespace Voracity.UI.Console
 
         private static void DrawBoard(IBoard board)
         {
+            System.Console.Clear();
+            System.Console.WriteLine(GetControlsInstructions());
             int i = 1;
             foreach (PositionedTile tile in board.Tiles())
             {
                 if (board.CurrentTile == tile)
-                {
-                    System.Console.BackgroundColor = ConsoleColor.Yellow;
-                    System.Console.ForegroundColor = ConsoleColor.White;
-                    System.Console.Write(" ");
-                    System.Console.ResetColor();
-                }
+                    DrawColoredSpace(ConsoleColor.Yellow);
                 else
                 {
                     if (tile.IsActive)
                         System.Console.Write(tile.Number);
                     else
-                    {
-                        System.Console.BackgroundColor = ConsoleColor.Blue;
-                        System.Console.ForegroundColor = ConsoleColor.White;
-                        System.Console.Write(" ");
-                        System.Console.ResetColor();
-                    }
+                        DrawColoredSpace(ConsoleColor.Blue);
                 }
                 System.Console.Write("   ");
                 if (i%_boardSize == 0) System.Console.Write("\n\n");
                 i++;
             }
+        }
+
+        private static void DrawColoredSpace(ConsoleColor background)
+        {
+            System.Console.BackgroundColor = background;
+            System.Console.ForegroundColor = ConsoleColor.White;
+            System.Console.Write(" ");
+            System.Console.ResetColor();
         }
 
         private static void ProcessInput()

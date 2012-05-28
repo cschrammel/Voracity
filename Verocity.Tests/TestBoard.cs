@@ -9,14 +9,14 @@ namespace Voracity.Tests
     [TestClass]
     public class TestBoard
     {
-        private Board _board;
-        private const int _boardSize = 5;
+        private BoardTestDouble _board;
+        private const int _boardSize = 10;
 
         [TestInitialize]
         public void TestInit()
         {
             var positionFinder = new PositionFinder(_boardSize);
-            _board = new Board(_boardSize, positionFinder, new SurroundingTileFinder(_boardSize, positionFinder));
+            _board = new BoardTestDouble(_boardSize, positionFinder, new SurroundingTileFinder(_boardSize, positionFinder));
         }
 
         [TestMethod]
@@ -53,6 +53,15 @@ namespace Voracity.Tests
             _board.ResetTiles();
             Position startPosition2 = _board.CurrentTile.Position;
             Assert.AreNotEqual(startPosition1, startPosition2);
+        }
+
+        [TestMethod]
+        public void AvailableMoves()
+        {
+            PositionedTile bottomLeftTile = _board.Tiles()[0];
+            _board.SetCurrentTile(bottomLeftTile);
+            const int expectedMovesRemaining = 3;
+            Assert.AreEqual(expectedMovesRemaining, _board.AvailableMoves().Count);
         }
 
         
