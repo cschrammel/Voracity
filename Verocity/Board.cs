@@ -33,8 +33,8 @@ namespace Voracity
         public void Move(Directions direction)
         {
             Position surroundingPosition = _tileFinder.GetSurroundingPosition(_currentTile.Position, direction);
-            var nextTile = _tileFinder.GetTile(surroundingPosition, Tiles());
-            nextTile.IsActive = false;
+            PositionedTile nextTile = _tileFinder.GetTile(surroundingPosition, Tiles());
+            nextTile.Flip();
             _currentTile = nextTile;
         }
 
@@ -47,6 +47,7 @@ namespace Voracity
                 _tiles.Add(new PositionedTile(_positionFinder.GetPosition(i), random.Next(1, 8)));
             }
             _currentTile = _tiles[random.Next(0, _maxTiles)];
+            _currentTile.Flip();
         }
 
         public List<PositionedTile> Tiles()
@@ -55,6 +56,5 @@ namespace Voracity
         }
 
         #endregion
-
     }
 }

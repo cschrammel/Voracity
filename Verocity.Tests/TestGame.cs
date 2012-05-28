@@ -128,7 +128,7 @@ namespace Voracity.Tests
             _board.SetCurrentTile(bottomLeftTile);
             _game.Chomp(Directions.North);
             PositionedTile northernTile = _game.Board.Tiles()[_boardSize];
-            var expectedTilesRemaining = _game.Board.Tiles().Count - northernTile.Number;
+            var expectedTilesRemaining = _game.Board.Tiles().Count - northernTile.Number - 1;
             Assert.AreEqual(expectedTilesRemaining, _game.TilesRemaining());
         }
 

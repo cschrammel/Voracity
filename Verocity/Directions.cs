@@ -9,6 +9,7 @@ namespace Voracity
         NorthEast,
         NorthWest,
         SouthEast,
-        SouthWest
+        SouthWest,
+        None
     }
 }

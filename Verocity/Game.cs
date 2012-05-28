@@ -42,10 +42,10 @@ namespace Voracity
             if (CanMove(direction))
             {
                 Board.Move(direction);
-                var tileWithNumberToMove = Board.CurrentTile;
+                PositionedTile tileWithNumberToMove = Board.CurrentTile;
                 for (int i = 1; i < tileWithNumberToMove.Number; i++)
                 {
-                   _board.Move(direction);
+                    _board.Move(direction);
                 }
                 _score += tileWithNumberToMove.Number;
             }
@@ -56,13 +56,15 @@ namespace Voracity
             Position surroundingPosition = _tileFinder.GetSurroundingPosition(_board.CurrentTile.Position, direction);
             if (_tileFinder.IsValid(surroundingPosition))
             {
-                var nextTile = _tileFinder.GetTile(surroundingPosition, _board.Tiles());
-                var nTile = nextTile;                 
+                PositionedTile nextTile = _tileFinder.GetTile(surroundingPosition, _board.Tiles());
+                PositionedTile nTile = nextTile;
+                if (nTile.IsActive == false) return false;
                 for (int i = 1; i < nextTile.Number; i++)
                 {
                     Position nextPosition = _tileFinder.GetSurroundingPosition(nTile.Position, direction);
                     if (!_tileFinder.IsValid(nextPosition)) return false;
                     nTile = _tileFinder.GetTile(nextPosition, _board.Tiles());
+                    if (nTile.IsActive == false) return false;
                 }
             }
             else
@@ -74,9 +76,20 @@ namespace Voracity
 
         public List<PositionedTile> AvailableMoves()
         {
-            return (from direction in Enum.GetValues(typeof(Directions)).Cast<Directions>()
-             where CanMove(direction)
-                        select _tileFinder.GetTile(_tileFinder.GetSurroundingPosition(_board.CurrentTile.Position, direction), _board.Tiles())).ToList();
+            return (from direction in GetAllDirections()
+                    where CanMove(direction)
+                    select GetSurroundingTile(direction)).ToList();
+        }
+
+        private PositionedTile GetSurroundingTile(Directions direction)
+        {
+            return _tileFinder.GetTile(
+                _tileFinder.GetSurroundingPosition(_board.CurrentTile.Position, direction), _board.Tiles());
+        }
+
+        private IEnumerable<Directions> GetAllDirections()
+        {
+            return Enum.GetValues(typeof (Directions)).Cast<Directions>();
         }
     }
 }
