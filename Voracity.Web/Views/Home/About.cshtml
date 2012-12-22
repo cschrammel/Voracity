@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+
+<h2>About</h2>
+<p>
+     This is one of my favorite old school games from the Windows 95 days. It is a simple puzzle game in which you start with a grid that contains tiles with random numbers between 1 and 8. You start at a random tile and you can move to any surrounding tile. The number on the surrounding tile will indicate how many tiles to move away from the previous position and pick up. For each tile you pick up, you get one point. The goal is to score the greatest amount of points before you have no available moves left.
+</p>
+
+<ul data-role="listview" data-inset="true">
+    <li data-role="list-divider">Navigation</li>
+    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+    <li>@Html.ActionLink("Play Game", "Play", "Home")</li>
+</ul>

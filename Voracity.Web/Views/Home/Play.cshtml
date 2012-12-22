@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Voracity";
+}
+
+<style type="text/css">
+
+span {
+    float: left;
+	width: 40px;
+}
+
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var board = $('#voracityBoard');
+        var tiles = '';
+        for (var i = 1; i <= 100; i++) {
+            var randomNumber = 1+ Math.floor(Math.random() * 9);
+            tiles += '<span>' + randomNumber + '</span>';
+            if (i % 10 == 0) {
+                tiles += "<br/><br/>";
+            }
+        }
+        board.html(tiles);
+    })
+</script>
+
+<h2>Voracity</h2>
+    <div id="voracityBoard">
+    </div>
+
+<ul data-role="listview" data-inset="true">
+    <li data-role="list-divider">Navigation</li>
+    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+    <li>@Html.ActionLink("About", "About", "Home")</li>
+</ul>

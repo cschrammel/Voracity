@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Voracity", "Verocity\Voracity.csproj", "{2EAB685D-3CCF-436E-B342-348E2C67C4A5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Voracity.Tests", "Verocity.Tests\Voracity.Tests.csproj", "{B01E5467-F6F4-4245-B956-C6B09160A637}"
@@ -17,6 +17,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{4A2A1242-B10E-4316-818D-CF5AB482A195}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Voracity.UI.Console", "Voracity.UI.Console\Voracity.UI.Console.csproj", "{6DA40D01-77FF-4FB9-84F9-B8EAD355BE69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Voracity.Web", "Voracity.Web\Voracity.Web.csproj", "{F69EBE98-B95D-49F6-B450-EB2A6B6F0E58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Voracity.Web.Tests", "Voracity.Web.Tests\Voracity.Web.Tests.csproj", "{665B3D81-C9F4-43F6-BBD1-164D866C0941}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -61,13 +65,35 @@ Global
 		{6DA40D01-77FF-4FB9-84F9-B8EAD355BE69}.Release|Mixed Platforms.Build.0 = Release|x86
 		{6DA40D01-77FF-4FB9-84F9-B8EAD355BE69}.Release|x86.ActiveCfg = Release|x86
 		{6DA40D01-77FF-4FB9-84F9-B8EAD355BE69}.Release|x86.Build.0 = Release|x86
+		{F69EBE98-B95D-49F6-B450-EB2A6B6F0E58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F69EBE98-B95D-49F6-B450-EB2A6B6F0E58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F69EBE98-B95D-49F6-B450-EB2A6B6F0E58}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F69EBE98-B95D-49F6-B450-EB2A6B6F0E58}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F69EBE98-B95D-49F6-B450-EB2A6B6F0E58}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F69EBE98-B95D-49F6-B450-EB2A6B6F0E58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F69EBE98-B95D-49F6-B450-EB2A6B6F0E58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F69EBE98-B95D-49F6-B450-EB2A6B6F0E58}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F69EBE98-B95D-49F6-B450-EB2A6B6F0E58}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F69EBE98-B95D-49F6-B450-EB2A6B6F0E58}.Release|x86.ActiveCfg = Release|Any CPU
+		{665B3D81-C9F4-43F6-BBD1-164D866C0941}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{665B3D81-C9F4-43F6-BBD1-164D866C0941}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{665B3D81-C9F4-43F6-BBD1-164D866C0941}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{665B3D81-C9F4-43F6-BBD1-164D866C0941}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{665B3D81-C9F4-43F6-BBD1-164D866C0941}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{665B3D81-C9F4-43F6-BBD1-164D866C0941}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{665B3D81-C9F4-43F6-BBD1-164D866C0941}.Release|Any CPU.Build.0 = Release|Any CPU
+		{665B3D81-C9F4-43F6-BBD1-164D866C0941}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{665B3D81-C9F4-43F6-BBD1-164D866C0941}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{665B3D81-C9F4-43F6-BBD1-164D866C0941}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{2EAB685D-3CCF-436E-B342-348E2C67C4A5} = {A1B39E7E-A9B2-43D5-AE6E-250D4F57D075}
 		{B01E5467-F6F4-4245-B956-C6B09160A637} = {A1B39E7E-A9B2-43D5-AE6E-250D4F57D075}
+		{2EAB685D-3CCF-436E-B342-348E2C67C4A5} = {A1B39E7E-A9B2-43D5-AE6E-250D4F57D075}
 		{6DA40D01-77FF-4FB9-84F9-B8EAD355BE69} = {4A2A1242-B10E-4316-818D-CF5AB482A195}
+		{F69EBE98-B95D-49F6-B450-EB2A6B6F0E58} = {4A2A1242-B10E-4316-818D-CF5AB482A195}
+		{665B3D81-C9F4-43F6-BBD1-164D866C0941} = {4A2A1242-B10E-4316-818D-CF5AB482A195}
 	EndGlobalSection
 EndGlobal
