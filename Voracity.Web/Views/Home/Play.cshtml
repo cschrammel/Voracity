@@ -3,32 +3,49 @@
 }
 
 <style type="text/css">
-
-span {
-    float: left;
-	width: 40px;
-}
-
+    .tile {
+        background-color: grey;
+        border-style: solid;
+        border-width: 1px;
+        float: left;
+        height: 30px;
+        text-align: center;
+        width: 30px;
+    }
 </style>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+
+    $(function() {
+        var viewModel = {
+            startGame: function() {
+                DrawBoard();
+            }
+        };
+        ko.applyBindings(viewModel);
+    });
+
+    function DrawBoard() {
         var board = $('#voracityBoard');
         var tiles = '';
-        for (var i = 1; i <= 100; i++) {
-            var randomNumber = 1+ Math.floor(Math.random() * 9);
-            tiles += '<span>' + randomNumber + '</span>';
-            if (i % 10 == 0) {
-                tiles += "<br/><br/>";
+        for (var w = 1; w <= 10; w++) {
+            for (var h = 1; h <= 10; h++) {
+                var randomNumber = 1 + Math.floor(Math.random() * 9);
+                tiles += '<span class="tile">' + randomNumber + '</span>';
             }
         }
         board.html(tiles);
-    })
+    }
+
+    $(document).ready(function() {
+        DrawBoard();
+    });
 </script>
 
 <h2>Voracity</h2>
-    <div id="voracityBoard">
-    </div>
+<button data-bind="click: startGame">Start Game</button>
+<div id="voracityBoard" style='height: 320px; width: 320px;'>
+</div>
 
 <ul data-role="listview" data-inset="true">
     <li data-role="list-divider">Navigation</li>

@@ -23,6 +23,8 @@ namespace Voracity.Web
 
             bundles.Add(new ScriptBundle("~/bundles/jquerymobile").Include("~/Scripts/jquery.mobile*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/knockout").Include("~/Scripts/knockout-2.2.0*"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/mobilecss").Include("~/Content/jquery.mobile*"));
