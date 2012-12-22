@@ -25,20 +25,27 @@
         };
 
         var Board = function(tiles) {
-            this.tiles = ko.observableArray(tiles);
+            var self = this;
+            self.tiles = ko.observableArray(tiles);
+            self.startOver = function() {
+                self.tiles.removeAll();
+            };
+            self.randomizeTiles = function() {
+                for (var x = 1; x <= 10; x++) {
+                    for (var y = 1; y <= 10; y++) {
+                        var randomNumber = 1 + Math.floor(Math.random() * 9);
+                        var tile = new Tile(x, y, randomNumber);
+                        self.tiles.push(tile);
+                    }
+                }
+            };
         };
 
         var viewModel = {
             board: new Board(new Array()),
             startGame: function () {
-                this.board.tiles.removeAll();
-                for (var x = 1; x <= 10; x++) {
-                    for (var y = 1; y <= 10; y++) {
-                        var randomNumber = 1 + Math.floor(Math.random() * 9);
-                        var tile = new Tile(x, y, randomNumber);
-                        this.board.tiles.push(tile);
-                    }
-                }
+                this.board.startOver();
+                this.board.randomizeTiles();
             }
         };
         ko.applyBindings(viewModel);
