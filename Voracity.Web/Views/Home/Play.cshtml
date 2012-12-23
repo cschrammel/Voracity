@@ -12,24 +12,56 @@
         text-align: center;
         width: 30px;
     }
+
+    .tile_hover {
+        background-color: lightblue;
+    }
+
+    .tile_current {
+        background-color: goldenrod;
+        border-style: solid;
+        border-width: 1px;
+        float: left;
+        height: 30px;
+        text-align: center;
+        width: 30px;
+    }
+
+    .tile_flipped {
+        background-color: darkolivegreen;
+        border-style: solid;
+        border-width: 1px;
+        float: left;
+        height: 30px;
+        text-align: center;
+        width: 30px;
+    }
 </style>
 
 <script type="text/javascript">
 
-    $(function () {
+    $(function() {
 
         var Tile = function(x, y, number) {
-            this.x = x;
-            this.y = y;
-            this.number = number;
+            var self = this;
+            self.x = ko.observable(x);
+            self.y = ko.observable(y);
+            self.number = ko.observable(number);
+            self.isCurrent = ko.observable(false);
+            self.isFlipped = ko.observable(false);
+            self.flip = function() {
+                this.isFlipped(true);
+            };
         };
 
         var Board = function(tiles) {
             var self = this;
             self.tiles = ko.observableArray(tiles);
+
             self.startOver = function() {
                 self.tiles.removeAll();
             };
+
             self.randomizeTiles = function() {
                 for (var x = 1; x <= 10; x++) {
                     for (var y = 1; y <= 10; y++) {
@@ -39,13 +71,20 @@
                     }
                 }
             };
+
+            self.randomizeStart = function() {
+                var randomIndex = Math.floor(Math.random() * 100);
+                var t = self.tiles()[randomIndex];
+                t.isCurrent(true);
+            };
         };
 
         var viewModel = {
             board: new Board(new Array()),
-            startGame: function () {
+            startGame: function() {
                 this.board.startOver();
                 this.board.randomizeTiles();
+                this.board.randomizeStart();
             }
         };
         ko.applyBindings(viewModel);
@@ -59,7 +98,10 @@
 <button data-bind="click: startGame">Start Game</button>
 <div id="voracityBoard" style='height: 320px; width: 320px;'>
     <span data-bind="foreach:board.tiles">
-        <span data-bind="text: number" class="tile"></span>
+        <span data-bind="
+            text: number, 
+            attr: { class: isCurrent() ? 'tile_current' : isFlipped() ? 'tile_flipped' : 'tile' },
+            click: flip"></span>
     </span>
 </div>
 
