@@ -4,7 +4,7 @@
 
 <style type="text/css">
     .tile {
-        background-color: grey;
+        background-color: darkgrey;
         border-style: solid;
         border-width: 1px;
         float: left;
@@ -26,7 +26,7 @@
     }
 
     .tile_flipped {
-        background-color: darkolivegreen;
+        background-color: royalblue;
         border-style: solid;
         border-width: 1px;
         float: left;
@@ -86,6 +86,42 @@
                 self.currentIndex = randomIndex;
             };
 
+            self.hasMovesLeft = function () {
+                if ((!self.canMove(self.currentIndex - 1)) 
+                && (!self.canMove(self.currentIndex - 9)) 
+                && (!self.canMove(self.currentIndex - 10)) 
+                && (!self.canMove(self.currentIndex - 11)) 
+                && (!self.canMove(self.currentIndex + 1)) 
+                && (!self.canMove(self.currentIndex + 9)) 
+                && (!self.canMove(self.currentIndex + 10)) 
+                && (!self.canMove(self.currentIndex + 11))) return false;
+                return true;
+            };
+
+            self.canMove = function (index) {
+                if (index < 0 || index >= 100) return false;
+
+                var tile = self.tiles()[index];
+                var tileIndex = tile.y() + (tile.x() * 10 - 10) - 1;
+                var dif = tileIndex - self.currentIndex;
+                var canMove = true;
+
+                // overlap detection
+                for (var i = 1; i < tile.number() ; i++) {
+                    var flipIndex = tileIndex + (i * dif);
+                    var flipTile = self.tiles()[flipIndex];
+                    if (flipIndex < 0 || flipIndex >= 100 || flipTile.isFlipped() === true) canMove = false;
+                }
+
+                // edge detection
+                var currentTile = self.tiles()[self.currentIndex];
+                if ((dif === -1 || dif === -1 * (10 - 1) || dif === 10 - 1) && currentTile.y() - tile.number() < 1) canMove = false;
+                if ((dif === 1 || dif === -1 * (10 + 1) || dif === 10 + 1) && currentTile.y() + tile.number() > 10) canMove = false;
+                if ((dif === -10 || dif === -1 * (10 - 1) || dif === 10 - 1) && currentTile.x() - tile.number() < 1) canMove = false;
+                if ((dif === 10 || dif === -1 * (10 + 1) || dif === 10 + 1) && currentTile.x() + tile.number() > 10) canMove = false;
+                return canMove;
+            };
+
             self.move = function(tile) {
                 var tileIndex = tile.y() + (tile.x() * 10 - 10) - 1;
                 var dif = tileIndex - self.currentIndex;
@@ -93,20 +129,9 @@
                     dif === -1 * (10 - 1) || dif === -10 || dif === -1 * (10 + 1) ||
                         dif === -1 || dif === 1 ||
                         dif === 10 - 1 || dif === 10 || dif === 10 + 1;
-                if (isSurroundingTile) {
-                    var canFlip = true;
-                    
-                    for (var i = 1; i < tile.number(); i++) {
-                        var flipIndex = tileIndex + (i * dif);
-                        var flipTile = self.tiles()[flipIndex];
-                        if (flipIndex < 0 || flipIndex >= 100 || flipTile.isFlipped() === true) canFlip = false;
-                    }
-                    var currentTile = self.tiles()[self.currentIndex];
-                    if ((dif === -1 || dif === -1 * (10 - 1) || dif === 10 - 1) && currentTile.y() - tile.number() < 1) canFlip = false;
-                    if ((dif === 1 || dif === -1 * (10 + 1) || dif === 10 + 1) && currentTile.y() + tile.number() > 10) canFlip = false;
-                    if ((dif === -10 || dif === -1 * (10 - 1) || dif === 10 - 1) && currentTile.x() - tile.number() < 1) canFlip = false;
-                    if ((dif === 10 || dif === -1 * (10 + 1) || dif === 10 + 1) && currentTile.x() + tile.number() > 10) canFlip = false;
 
+                if (isSurroundingTile) {
+                    var canFlip = self.canMove(tileIndex);
                     if (canFlip) {
                         for (var i = 0; i < tile.number() - 1; i++) {
                             var flipIndex = tileIndex + (i * dif);
@@ -118,13 +143,11 @@
                         self.tiles()[newCurrentIndex].isCurrent(true);
                         self.currentIndex = newCurrentIndex;
                         self.score(self.score() + tile.number());
-
+                        if (self.hasMovesLeft() == false) alert('Game over.  Your final score is ' + self.score() + '.');
                     }
                 }
             };
-        }
-
-        ;
+        };
         var viewModel = new ViewModel();
         ko.applyBindings(viewModel);
     });
