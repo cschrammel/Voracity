@@ -49,44 +49,75 @@
             self.number = ko.observable(number);
             self.isCurrent = ko.observable(false);
             self.isFlipped = ko.observable(false);
-            self.flip = function() {
+            self.flip = function () {
                 this.isFlipped(true);
             };
         };
 
-        var Board = function(tiles) {
+        function ViewModel () {
             var self = this;
-            self.tiles = ko.observableArray(tiles);
 
-            self.startOver = function() {
+            self.tiles = ko.observableArray();
+
+            self.startGame = function () {
+                this.startOver();
+                this.randomizeTiles();
+                this.randomizeStart();
+            };
+            
+            self.startOver = function () {
                 self.tiles.removeAll();
             };
 
-            self.randomizeTiles = function() {
+            self.randomizeTiles = function () {
                 for (var x = 1; x <= 10; x++) {
                     for (var y = 1; y <= 10; y++) {
-                        var randomNumber = 1 + Math.floor(Math.random() * 9);
+                        var randomNumber = 1 + Math.floor(Math.random() * 8);
                         var tile = new Tile(x, y, randomNumber);
                         self.tiles.push(tile);
                     }
                 }
             };
 
-            self.randomizeStart = function() {
+            self.randomizeStart = function () {
                 var randomIndex = Math.floor(Math.random() * 100);
                 var t = self.tiles()[randomIndex];
                 t.isCurrent(true);
+                self.currentIndex = randomIndex;
+            };
+
+            self.move = function (tile) {
+                var tileIndex = tile.y() + (tile.x() * 10 - 10) - 1;
+                // right
+                if (tileIndex === self.currentIndex + 1) {
+                    if (tile.number() + tile.y() - 1 <= 10) {
+                        for (var i = 0; i < tile.number() - 1 ; i++) {
+                            var flipIndex = tileIndex + i;
+                            self.tiles()[flipIndex].flip();
+                        }
+                        self.tiles()[self.currentIndex].flip();
+                        var newCurrentIndex = tileIndex + tile.number() - 1;
+                        self.tiles()[newCurrentIndex].isCurrent(true);
+                        self.currentIndex = newCurrentIndex;
+                    }
+                }
+                // down
+                var isDown = tileIndex === self.currentIndex + 10;
+                if (isDown) {
+                    if (tile.number() + tile.x() - 1 <= 10) {
+                        for (var i = 0; i < tile.number() - 1 ; i++) {
+                            var flipIndex = tileIndex + (i * 10);
+                            self.tiles()[flipIndex].flip();
+                        }
+                        self.tiles()[self.currentIndex].flip();
+                        var newCurrentIndex = tileIndex + (10 * tile.number() - 9) - 1;
+                        self.tiles()[newCurrentIndex].isCurrent(true);
+                        self.currentIndex = newCurrentIndex;
+                    }
+                }
             };
         };
-
-        var viewModel = {
-            board: new Board(new Array()),
-            startGame: function() {
-                this.board.startOver();
-                this.board.randomizeTiles();
-                this.board.randomizeStart();
-            }
-        };
+        var viewModel = new ViewModel();
         ko.applyBindings(viewModel);
     });
 
@@ -97,11 +128,11 @@
 <h2>Voracity</h2>
 <button data-bind="click: startGame">Start Game</button>
 <div id="voracityBoard" style='height: 320px; width: 320px;'>
-    <span data-bind="foreach:board.tiles">
+    <span data-bind="foreach:tiles">
         <span data-bind="
             text: number, 
-            attr: { class: isCurrent() ? 'tile_current' : isFlipped() ? 'tile_flipped' : 'tile' },
-            click: flip"></span>
+            attr: { class: isCurrent() && !isFlipped() ? 'tile_current' : isFlipped() ? 'tile_flipped' : 'tile' },
+            click: $parent.move"></span>
     </span>
 </div>
 
