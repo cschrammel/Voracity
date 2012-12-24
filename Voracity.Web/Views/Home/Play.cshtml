@@ -59,6 +59,8 @@
 
             self.tiles = ko.observableArray();
 
+            self.score = ko.observable(0);
+
             self.startGame = function () {
                 this.startOver();
                 this.randomizeTiles();
@@ -88,36 +90,26 @@
 
             self.move = function (tile) {
                 var tileIndex = tile.y() + (tile.x() * 10 - 10) - 1;
-                // right
-                if (tileIndex === self.currentIndex + 1) {
-                    if (tile.number() + tile.y() - 1 <= 10) {
-                        for (var i = 0; i < tile.number() - 1 ; i++) {
-                            var flipIndex = tileIndex + i;
-                            self.tiles()[flipIndex].flip();
-                        }
-                        self.tiles()[self.currentIndex].flip();
-                        var newCurrentIndex = tileIndex + tile.number() - 1;
-                        self.tiles()[newCurrentIndex].isCurrent(true);
-                        self.currentIndex = newCurrentIndex;
+                var dif = tileIndex - self.currentIndex;
+                var isSurroundingTile =
+                    dif === -1 * (10 - 1) || dif === -10 || dif === -1 * (10 + 1) ||
+                    dif === -1 || dif === 1 ||
+                    dif === 10 - 1 || dif === 10 || dif === 10 + 1;
+                if (isSurroundingTile) {
+                    for (var i = 0; i < tile.number() - 1 ; i++) {
+                        var flipIndex = tileIndex + (i * dif);
+                        self.tiles()[flipIndex].flip();
                     }
-                }
-                // down
-                var isDown = tileIndex === self.currentIndex + 10;
-                if (isDown) {
-                    if (tile.number() + tile.x() - 1 <= 10) {
-                        for (var i = 0; i < tile.number() - 1 ; i++) {
-                            var flipIndex = tileIndex + (i * 10);
-                            self.tiles()[flipIndex].flip();
-                        }
-                        self.tiles()[self.currentIndex].flip();
-                        var newCurrentIndex = tileIndex + (10 * tile.number() - 9) - 1;
-                        self.tiles()[newCurrentIndex].isCurrent(true);
-                        self.currentIndex = newCurrentIndex;
-                    }
+                    self.tiles()[self.currentIndex].flip();
+                    self.tiles()[self.currentIndex].isCurrent(false);
+                    var newCurrentIndex = tileIndex + (dif * (tile.number() - 1));
+                    self.tiles()[newCurrentIndex].isCurrent(true);
+                    self.currentIndex = newCurrentIndex;
+                    self.score(self.score() + tile.number());
                 }
             };
         };
-        var viewModel = new ViewModel();
+        var viewModel = new ViewModel();    
         ko.applyBindings(viewModel);
     });
 
@@ -131,10 +123,12 @@
     <span data-bind="foreach:tiles">
         <span data-bind="
             text: number, 
-            attr: { class: isCurrent() && !isFlipped() ? 'tile_current' : isFlipped() ? 'tile_flipped' : 'tile' },
+            attr: { class: isCurrent() ? 'tile_current' : isFlipped() ? 'tile_flipped' : 'tile' },
             click: $parent.move"></span>
     </span>
 </div>
+<span> Score: </span>
+<span data-bind="text: score"></span>
 
 <ul data-role="listview" data-inset="true">
     <li data-role="list-divider">Navigation</li>
