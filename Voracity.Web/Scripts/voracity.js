@@ -26,6 +26,7 @@ function ViewModel() {
 
     self.startOver = function () {
         self.tiles.removeAll();
+        self.score(0);
     };
 
     self.randomizeTiles = function () {
