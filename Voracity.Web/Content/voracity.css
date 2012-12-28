@@ -1,0 +1,31 @@
+﻿   .tile {
+        background-color: darkgrey;
+        border-style: solid;
+        border-width: 1px;
+        float: left;
+        height: 30px;
+        text-align: center;
+        width: 30px;
+    }
+
+    .tile_hover { background-color: lightblue; }
+
+    .tile_current {
+        background-color: goldenrod;
+        border-style: solid;
+        border-width: 1px;
+        float: left;
+        height: 30px;
+        text-align: center;
+        width: 30px;
+    }
+
+    .tile_flipped {
+        background-color: royalblue;
+        border-style: solid;
+        border-width: 1px;
+        float: left;
+        height: 30px;
+        text-align: center;
+        width: 30px;
+    }
