@@ -13,12 +13,25 @@
 <!-- The tests -->
 <script>
     $(function() {
-        module("ViewModel Module");
-        test("Basic functionality", function() {
+        test("Basics", function() {
             var vm = new ViewModel();
             ok(vm, "My ViewModel is a O.K.");
             vm.startGame();
             equals(vm.score(), 0, "The score after starting the game should be 0.");
+        });
+        test("Moving", function () {
+            var vm = new ViewModel();
+            vm.startGame();
+            vm.tiles()[24] = new Tile(3, 5, 0);
+            vm.tiles()[13] = new Tile(2, 4, 2);
+            vm.currentIndex = 24;
+            equals(vm.canMove(13), true, "Can move diagonally left");
+            vm.tiles()[13] = new Tile(2, 4, 3);
+            equals(vm.canMove(13), false, "Can't move diagonally left when would be out of bounds");
+            vm.tiles()[28] = new Tile(3, 9, 1);
+            vm.tiles()[19] = new Tile(2, 10, 2);
+            vm.currentIndex = 28;
+            equals(vm.canMove(19), false, "Can't move diagonally right when would be out of bounds");
         });
     });
 </script>

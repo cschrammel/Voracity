@@ -66,7 +66,7 @@ function ViewModel() {
         var canMove = true;
 
         // overlap detection
-        for (var i = 1; i < tile.number() ; i++) {
+        for (var i = 0; i < tile.number() ; i++) {
             var flipIndex = tileIndex + (i * dif);
             var flipTile = self.tiles()[flipIndex];
             if (flipIndex < 0 || flipIndex >= 100 || flipTile.isFlipped() === true) canMove = false;
@@ -74,10 +74,14 @@ function ViewModel() {
 
         // edge detection
         var currentTile = self.tiles()[self.currentIndex];
-        if ((dif === -1 || dif === -1 * (10 - 1) || dif === 10 - 1) && currentTile.y() - tile.number() < 1) canMove = false;
-        if ((dif === 1 || dif === -1 * (10 + 1) || dif === 10 + 1) && currentTile.y() + tile.number() > 10) canMove = false;
-        if ((dif === -10 || dif === -1 * (10 - 1) || dif === 10 - 1) && currentTile.x() - tile.number() < 1) canMove = false;
-        if ((dif === 10 || dif === -1 * (10 + 1) || dif === 10 + 1) && currentTile.x() + tile.number() > 10) canMove = false;
+        // left
+        if ((dif === -1 || dif === -1 * (10 + 1) || dif === 10 - 1) && currentTile.y() - tile.number() < 1) canMove = false;
+        // right
+        if ((dif === 1 || dif === -1 * (10 - 1) || dif === 10 + 1) && currentTile.y() + tile.number() > 10) canMove = false;
+        // up
+        if ((dif === -10 || dif === -1 * (10 - 1) || dif === -1 * (10 + 1)) && currentTile.x() - tile.number() < 1) canMove = false;
+        // down
+        if ((dif === 10 || dif === 10 + 1 || dif === 10 - 1) && currentTile.x() + tile.number() > 10) canMove = false;
         return canMove;
     };
 
