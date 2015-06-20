@@ -42,10 +42,10 @@ namespace VoracityMac
             switch (direction)
             {
                 case Directions.North:
-                    position = new Position(start.X, start.Y + 1);
+                    position = new Position(start.X, start.Y - 1);
                     break;
                 case Directions.South:
-                    position = new Position(start.X, start.Y - 1);
+                    position = new Position(start.X, start.Y + 1);
                     break;
                 case Directions.West:
                     position = new Position(start.X - 1, start.Y);
@@ -54,16 +54,16 @@ namespace VoracityMac
                     position = new Position(start.X + 1, start.Y);
                     break;
                 case Directions.NorthEast:
-                    position = new Position(start.X + 1, start.Y + 1);
+                    position = new Position(start.X + 1, start.Y - 1);
                     break;
                 case Directions.NorthWest:
-                    position = new Position(start.X - 1, start.Y + 1);
-                    break;
-                case Directions.SouthWest:
                     position = new Position(start.X - 1, start.Y - 1);
                     break;
+                case Directions.SouthWest:
+                    position = new Position(start.X - 1, start.Y + 1);
+                    break;
                 default:
-                    position = new Position(start.X + 1, start.Y - 1);
+                    position = new Position(start.X + 1, start.Y + 1);
                     break;
             }
             return position;

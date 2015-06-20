@@ -1,5 +1,5 @@
 namespace VoracityMac
-{
+{           
     public enum Directions
     {
         North,

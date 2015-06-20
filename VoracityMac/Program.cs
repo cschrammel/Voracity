@@ -6,14 +6,13 @@ namespace VoracityMac
     {
         private const int _boardSize = 17;
         private static Game _gameEngine;
-        private static KeyboardInputMapper _inputMapper;
-
+        
         private static void Main(string[] args)
         {
+            Console.Clear();
             var positionFinder = new PositionFinder(_boardSize);
             var surroundingTileFinder = new SurroundingTileFinder(_boardSize, positionFinder);
             _gameEngine = new Game(new Board(_boardSize, positionFinder, surroundingTileFinder));
-            _inputMapper = new KeyboardInputMapper();
             while (_gameEngine.Board.AvailableMoves().Count > 0)
             {
                 DrawBoard(_gameEngine.Board);
@@ -24,21 +23,8 @@ namespace VoracityMac
             System.Console.ReadLine();
         }
 
-        private static string GetControlsInstructions()
-        {
-            return String.Format(
-                "Keys: Up={0}, Down={1}, Left={2}, Right={3}, \n" +
-                "Up-Left={4}, Up-Right={5}, Down-Left={6}, Down-Right={7}\n\n",
-                _inputMapper.GetKey(Directions.South), _inputMapper.GetKey(Directions.North),
-                _inputMapper.GetKey(Directions.West), _inputMapper.GetKey(Directions.East),
-                _inputMapper.GetKey(Directions.SouthWest), _inputMapper.GetKey(Directions.SouthEast),
-                _inputMapper.GetKey(Directions.NorthWest), _inputMapper.GetKey(Directions.NorthEast));
-        }
-
         private static void DrawBoard(IBoard board)
         {
-            System.Console.Clear();
-            System.Console.WriteLine(GetControlsInstructions());
             int i = 1;
             foreach (PositionedTile tile in board.Tiles())
             {
@@ -67,8 +53,39 @@ namespace VoracityMac
 
         private static void ProcessInput()
         {
-            ConsoleKeyInfo input = System.Console.ReadKey();
-            _gameEngine.Chomp(_inputMapper.GetDirection(input.Key));
+            var k = Console.Read();
+            Directions direction = Directions.North;
+            var key = Convert.ToChar(k).ToString().ToLower();
+            
+            switch (key)
+            {
+                case "e":
+                    direction = Directions.North;
+                    break;
+               case "w":
+                    direction = Directions.NorthWest;
+                    break;
+               case "r":
+                    direction = Directions.NorthEast;
+                    break;
+               case "s":
+                    direction = Directions.West;
+                    break;
+               case "f":
+                    direction = Directions.East;
+                    break;
+               case "d":
+                    direction = Directions.South;
+                    break;
+               case "x":
+                    direction = Directions.SouthWest;
+                    break;
+               case "c":
+                    direction = Directions.SouthEast;
+                    break;
+            }
+            _gameEngine.Chomp(direction);
+            Console.Clear();
         }
     }
 }

@@ -8,16 +8,23 @@
         "dnx451": {},
         "dnxcore50": {
             "dependencies": {
-                "System.Console": "2.0.0.0",
                 "System.Collections": "4.0.0.0",
-                "System.Collections.Concurrent": "4.0.0.0",
-                "System.ComponentModel": "2.0.0.0",
-                "System.Linq": "2.0.0.0",
-                "System.Reflection": "2.0.10.0",
-                "System.Runtime": "2.0.20.0",
-                "System.Runtime.InteropServices": "4.0.10.0",
-                "System.Threading": "4.0.0.0",
-                "System.Threading.Tasks": "4.0.0.0"
+        "System.Collections.Concurrent": "4.0.0.0",
+        "System.ComponentModel": "3.0.0.0",
+        "System.Console": "3.0.0.0",
+        "System.Diagnostics.Contracts": "3.0.0.0",
+        "System.Diagnostics.Debug": "4.0.0.0",
+        "System.Globalization": "4.0.0.0",
+        "System.Linq": "3.0.0.0",
+        "System.Linq.Expressions": "4.0.0.0",
+        "System.Linq.Queryable": "3.0.0.0",
+        "System.Reflection": "4.0.0.0",
+        "System.Reflection.Extensions": "3.0.0.0",
+        "System.Resources.ResourceManager": "2.0.0.0",
+        "System.Runtime": "4.0.0.0",
+        "System.Runtime.Extensions": "4.0.0.0",
+        "System.Threading": "4.0.0.0",
+        "System.Threading.Tasks": "4.0.0.0"
             }
         }
     }
