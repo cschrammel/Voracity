@@ -1,0 +1,24 @@
+{
+    "version": "1.0.0-*",
+    "dependencies": {},
+    "commands": {
+        "run": "run"
+    },
+    "frameworks": {
+        "dnx451": {},
+        "dnxcore50": {
+            "dependencies": {
+                "System.Console": "2.0.0.0",
+                "System.Collections": "4.0.0.0",
+                "System.Collections.Concurrent": "4.0.0.0",
+                "System.ComponentModel": "2.0.0.0",
+                "System.Linq": "2.0.0.0",
+                "System.Reflection": "2.0.10.0",
+                "System.Runtime": "2.0.20.0",
+                "System.Runtime.InteropServices": "4.0.10.0",
+                "System.Threading": "4.0.0.0",
+                "System.Threading.Tasks": "4.0.0.0"
+            }
+        }
+    }
+}
