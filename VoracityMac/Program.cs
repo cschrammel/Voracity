@@ -54,7 +54,7 @@ namespace VoracityMac
         private static void ProcessInput()
         {
             var k = Console.Read();
-            Directions direction = Directions.North;
+            Directions direction = Directions.None;
             var key = Convert.ToChar(k).ToString().ToLower();
             
             switch (key)

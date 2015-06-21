@@ -11,5 +11,5 @@ namespace VoracityMac
         SouthEast,
         SouthWest,
         None
-    }
+    } 
 }
