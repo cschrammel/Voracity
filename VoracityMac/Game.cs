@@ -19,7 +19,7 @@ namespace VoracityMac
 
         public int TilesRemaining()
         {
-            return (from t in _board.Tiles() where t.IsActive select t).Count();
+            return _board.Tiles().Count(t => t.IsActive);
         }
 
         public void NewGame()
@@ -38,7 +38,7 @@ namespace VoracityMac
             if (_board.CanMove(direction))
             {
                 Board.Move(direction);
-                PositionedTile tileWithNumberToMove = Board.CurrentTile;
+                var tileWithNumberToMove = Board.CurrentTile;
                 for (int i = 1; i < tileWithNumberToMove.Number; i++)
                 {
                     _board.Move(direction);

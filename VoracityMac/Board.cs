@@ -23,8 +23,6 @@ namespace VoracityMac
             ResetTiles();
         }
 
-        #region IBoard Members
-
         public PositionedTile CurrentTile
         {
             get { return _currentTile; }
@@ -96,7 +94,5 @@ namespace VoracityMac
         {
             return Enum.GetValues(typeof(Directions)).Cast<Directions>();
         }
-
-        #endregion
     }
 }
